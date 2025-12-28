@@ -1,10 +1,14 @@
 package it.unibo.mvc;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,17 +28,42 @@ public class MiniGUI {
     private static final int PROPORTION = 5;
     private final Random randomGenerator = new Random();
     private final JFrame frame = new JFrame(TITLE);
-
+    private final JTextField resultField = new JTextField("Result", 20);
     /**
      * Creates a new {@link MiniGUI}.
      */
     public MiniGUI() {
         final JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
+
+        final JPanel internalPanel = new JPanel();
+        internalPanel.setLayout(new BoxLayout(internalPanel, BoxLayout.X_AXIS));
+
         final JButton write = new JButton("Print a random number on standard output");
-        canvas.add(write, BorderLayout.CENTER);
+        
+        internalPanel.add(write);
+        //canvas.add(write, BorderLayout.CENTER);--> diventa
+        canvas.add(internalPanel, BorderLayout.CENTER);
+
+        canvas.add(resultField, BorderLayout.NORTH);
+
+
+        final JPanel myPanel = new JPanel();
+        myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.LINE_AXIS));
+
+        JButton myButton= new JButton();
+        myButton.setLayout(new FlowLayout());
+        
+        myPanel.add(myButton);
+        
+        JPanel myPanel2 = new JPanel();
+        canvas.add(myPanel2,BorderLayout.NORTH);
+
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        frame.add(myPanel,BorderLayout.CENTER);
+
         /*
          * Handlers
          */
@@ -44,7 +73,11 @@ public class MiniGUI {
                 System.out.println(randomGenerator.nextInt());
             }
         });
+
+
+        
     }
+
 
     private void display() {
         /*
